@@ -32,9 +32,11 @@ float scene(vec3 point) {
     float y = (iCurrentMouse.y / iResolution.y) * 5. - 2.5;
     float sphere1 = sphere(point, vec3(x, y, 0.), 0.5);
     // distort second sphere
+    displacement = sin(-5. * t.x) * sin(-5. * t.y) * sin(-5. * t.z) * 0.1;
+    sphere1 += displacement;
 
     // combine
-    result = smin(sphere0, sphere1, 0.2);
+    result = smin(sphere0, sphere1, 0.4);
 
     return result;
 }

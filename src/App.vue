@@ -7,7 +7,7 @@
         </component>
     </shader-doodle>
 
-    <!-- <shader-doodle shadertoy v-if="ready">
+    <shader-doodle shadertoy v-if="ready">
         <sd-texture
             shadow-root="#buffer0"
             force-update
@@ -18,7 +18,7 @@
         <component :is="'script'" type="x-shader/x-fragment">
             {{ fxaa }}
         </component>
-    </shader-doodle> -->
+    </shader-doodle>
 </template>
 
 <script lang="ts">
@@ -58,6 +58,6 @@ shader-doodle + shader-doodle {
     pointer-events: none;
 }
 #buffer0 {
-    // opacity: 0;
+    opacity: 0;
 }
 </style>
