@@ -2,24 +2,33 @@ const float EPSILON = 0.0001;
 const vec3 EPSILON_V3 = vec3(EPSILON, 0., 0.);
 const float MAX_DISTANCE = 1000.;
 const int MAX_STEPS = 32;
-
-const vec3 BACKGROUND_COLOR = vec3(0.);
-
-/** add a sphere with specified radius at specified point */
-float sphere(vec3 point, vec3 center, float radius) {
-    return length(point - center) - radius;
-}
-
-/** unit sphere at origin */
-float sphere(vec3 point) {
-    return sphere(point, vec3(0.), 1.);
-}
+const vec4 BACKGROUND_COLOR = vec4(0.);
 
 /** scene function*/
 float scene(vec3 point) {
     float sphere0 = sphere(point);
+    float result = sphere0;
 
-    return sphere0;
+    // create several small spheres
+    const float SPHERE_COUNT = 4.;
+    for(float i = 0.; i < SPHERE_COUNT; i++) {
+        // radius
+        float r = abs(rand(i)) * 0.4;
+
+        // direction
+        vec3 dir = normalize(vec3(rand(i + EPSILON), rand(i + EPSILON * 2.), rand(i + EPSILON * 3.)));
+        // dir *= 0.5;
+        float dist = 4.;
+        vec3 pos = dir * dist * sin(iTime * 0.01);
+
+        // sphere
+        float newSphere = sphere(point, pos, r);
+
+        result = smin(result, newSphere, 1.2);
+
+    }
+
+    return result;
 }
 /**
  * Return the normalized direction to march in from the eye point for a single pixel.
@@ -43,7 +52,7 @@ vec3 calculateNormal(vec3 point) {
 }
 
 /** raymarch to determine object position and color */
-vec3 raymarch(vec3 origin, vec3 dir) {
+vec4 raymarch(vec3 origin, vec3 dir) {
     float distanceTraveled = 0.;
     for(int i = 0; i < MAX_STEPS; ++i) {
         vec3 pos = origin + dir * distanceTraveled;
@@ -64,7 +73,7 @@ vec3 raymarch(vec3 origin, vec3 dir) {
             vec3 col = vec3(0., 0., 1.);
 
             // return the color for this entity
-            return col * lightIntensity;
+            return vec4(col * lightIntensity, 1.);
         }
 
         distanceTraveled += distanceToClosestEntity;
@@ -82,7 +91,7 @@ void main() {
     vec3 dir = rayDirection(gl_FragCoord.xy);
 
     // execute raymarch and get color
-    vec3 col = raymarch(cameraPos, dir);
+    vec4 col = raymarch(cameraPos, dir);
 
-    gl_FragColor = vec4(col, 1.);
+    gl_FragColor = col;
 }

@@ -8,12 +8,13 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import utils from './shaders/utils.fs?raw'
 import shader from './shaders/sdf-walczyk.fs?raw'
 
 export default defineComponent({
     setup() {
         return {
-            shader,
+            shader: utils + shader,
         }
     },
 })
@@ -28,5 +29,6 @@ shader-doodle {
     bottom: 0;
     width: 100%;
     height: 100%;
+    background: radial-gradient(white, #dedede);
 }
 </style>
