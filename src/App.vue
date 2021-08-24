@@ -1,5 +1,7 @@
 <template>
     <shader-doodle shadertoy>
+        <sd-texture src="matcap3.png" name="matcap" />
+
         <component :is="'script'" type="x-shader/x-fragment">
             {{ shader }}
         </component>

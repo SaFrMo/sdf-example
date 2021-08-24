@@ -22,3 +22,13 @@ float sphere(vec3 point, vec3 center, float radius) {
 float sphere(vec3 point) {
     return sphere(point, vec3(0.), 1.);
 }
+
+/** get matcap UV coordinates from camera and normal */
+// https://www.clicktorelease.com/blog/creating-spherical-environment-mapping-shader/
+vec2 matcapUv(vec3 camera, vec3 normal) {
+    vec3 reflected = reflect(normalize(camera), normalize(normal));
+    float m = 2. * sqrt(pow(reflected.x, 2.) +
+        pow(reflected.y, 2.) +
+        pow(reflected.z + 1., 2.));
+    return reflected.xy / m + .5;
+}
