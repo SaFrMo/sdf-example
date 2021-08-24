@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import shader from './shaders/sdf1.fs?raw'
+import shader from './shaders/sdf-walczyk.fs?raw'
 
 export default defineComponent({
     setup() {
