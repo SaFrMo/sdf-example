@@ -1,23 +1,42 @@
 <template>
-    <shader-doodle shadertoy>
+    <shader-doodle shadertoy id="buffer0">
         <sd-texture src="matcap3.png" name="matcap" />
 
         <component :is="'script'" type="x-shader/x-fragment">
             {{ shader }}
         </component>
     </shader-doodle>
+
+    <shader-doodle shadertoy v-if="ready">
+        <sd-texture
+            shadow-root="#buffer0"
+            force-update
+            src="canvas"
+            name="buffer0"
+        />
+
+        <component :is="'script'" type="x-shader/x-fragment">
+            {{ fxaa }}
+        </component>
+    </shader-doodle>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import utils from './shaders/utils.fs?raw'
 import shader from './shaders/sdf-walczyk.fs?raw'
+import fxaa from './shaders/fxaa.fs?raw'
 
 export default defineComponent({
     setup() {
         return {
             shader: utils + shader,
+            fxaa,
+            ready: ref(false),
         }
+    },
+    mounted() {
+        setTimeout(() => (this.ready = true), 1000)
     },
 })
 </script>
@@ -32,5 +51,8 @@ shader-doodle {
     width: 100%;
     height: 100%;
     background: radial-gradient(white, #dedede);
+}
+shader-doodle + shader-doodle {
+    pointer-events: none;
 }
 </style>
