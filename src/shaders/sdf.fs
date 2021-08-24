@@ -1,8 +1,19 @@
+// based on tutorials from Jamie Wong and Michael Walczyk:
+// http://jamie-wong.com/2016/07/15/ray-marching-signed-distance-functions/
+// https://michaelwalczyk.com/blog-ray-marching.html
+// as well as resources from Inigo Quilez:
+// https://iquilezles.org/www/articles/distfunctions/distfunctions.htm
+
 const float EPSILON = 0.0001;
 const vec3 EPSILON_V3 = vec3(EPSILON, 0., 0.);
 const float MAX_DISTANCE = 1000.;
 const int MAX_STEPS = 32;
-const vec4 BACKGROUND_COLOR = vec4(0., 0., 0., 0.);
+
+vec4 backgroundColor() {
+    vec2 st = gl_FragCoord.xy / iResolution.xy;
+    float lightness = 1. - distance(st, vec2(0.5));
+    return vec4(vec3(lightness), 1.) + 0.4;
+}
 
 uniform sampler2D matcap;
 
@@ -77,7 +88,7 @@ vec4 raymarch(vec3 origin, vec3 dir) {
             break;
         }
     }
-    return BACKGROUND_COLOR;
+    return backgroundColor();
 }
 
 void main() {

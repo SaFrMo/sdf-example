@@ -24,7 +24,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import utils from './shaders/utils.fs?raw'
-import shader from './shaders/sdf-walczyk.fs?raw'
+import shader from './shaders/sdf.fs?raw'
 import fxaa from './shaders/fxaa.fs?raw'
 
 export default defineComponent({
@@ -41,7 +41,7 @@ export default defineComponent({
 })
 </script>
 
-<style >
+<style lang="scss">
 shader-doodle {
     position: absolute;
     top: 0;
@@ -56,5 +56,8 @@ shader-doodle {
 }
 shader-doodle + shader-doodle {
     pointer-events: none;
+}
+#buffer0 {
+    opacity: 0;
 }
 </style>

@@ -6,7 +6,7 @@ vec3 tex(vec2 p) {
 }
 
 vec3 fxaa(vec2 p) {
-    const float FXAA_SPAN_MAX = 16.0;
+    const float FXAA_SPAN_MAX = 8.0;
     const float FXAA_REDUCE_MUL = 1.0 / 16.0;
     const float FXAA_REDUCE_MIN = 0.0;//1.0 / 128.0;
 
