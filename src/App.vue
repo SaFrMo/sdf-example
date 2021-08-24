@@ -19,6 +19,10 @@
             {{ fxaa }}
         </component>
     </shader-doodle>
+
+    <a class="link" href="https://github.com/SaFrMo/sdf-example" target="_blank"
+        >source</a
+    >
 </template>
 
 <script lang="ts">
@@ -59,5 +63,18 @@ shader-doodle + shader-doodle {
 }
 #buffer0 {
     opacity: 0;
+}
+.link {
+    position: fixed;
+    right: 10px;
+    bottom: 10px;
+    font-family: sans-serif;
+    color: tomato;
+    transition: color 0.2s;
+
+    &:hover,
+    &:focus {
+        color: darken(tomato, 40%);
+    }
 }
 </style>
