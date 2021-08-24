@@ -48,9 +48,11 @@ shader-doodle {
     right: 0;
     left: 0;
     bottom: 0;
-    width: 100%;
-    height: 100%;
+    width: 200%;
+    height: 200%;
     background: radial-gradient(white, #dedede);
+    transform: scale(0.5);
+    transform-origin: top left;
 }
 shader-doodle + shader-doodle {
     pointer-events: none;

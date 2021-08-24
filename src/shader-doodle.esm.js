@@ -1376,8 +1376,6 @@ function GeneralTexture(renderer, textureUnit, name, src, webcam, wrapS, wrapT, 
     } else {
       console.warn("src: ".concat(src, ": element is not a valid texture source"));
     }
-
-    console.log(type);
   }
 
   function setupImage() {

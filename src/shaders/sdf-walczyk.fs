@@ -2,7 +2,7 @@ const float EPSILON = 0.0001;
 const vec3 EPSILON_V3 = vec3(EPSILON, 0., 0.);
 const float MAX_DISTANCE = 1000.;
 const int MAX_STEPS = 32;
-const vec4 BACKGROUND_COLOR = vec4(0.);
+const vec4 BACKGROUND_COLOR = vec4(0., 0., 0., 0.);
 
 uniform sampler2D matcap;
 
@@ -15,29 +15,7 @@ float scene(vec3 point) {
     float x = (iCurrentMouse.x / iResolution.x) * 5. - 2.5;
     float y = (iCurrentMouse.y / iResolution.y) * 5. - 2.5;
     float sphere1 = sphere(point, vec3(x, y, 0.), 0.5);
-    result = smin(sphere0, sphere1, 0.4);
-
-    // create several small spheres
-    // const float SPHERE_COUNT = 4.;
-    // for(float i = 0.; i < SPHERE_COUNT; i++) {
-    //     // radius
-    //     float r = abs(rand(i)) * 0.4;
-
-    //     // direction
-    //     vec3 dir = vec3(rand(i + EPSILON), rand(i + EPSILON * 2.), rand(i + EPSILON * 3.));
-    //     dir *= 2.;
-    //     dir -= 1.;
-    //     dir = normalize(dir);
-
-    //     float dist = 4.;
-    //     vec3 pos = dir * dist * sin(iTime);
-
-    //     // sphere
-    //     float newSphere = sphere(point, pos, r);
-
-    //     result = smin(result, newSphere, 1.2);
-
-    // }
+    result = smin(sphere0, sphere1, 0.2);
 
     return result;
 }
@@ -77,7 +55,8 @@ vec4 raymarch(vec3 origin, vec3 dir) {
             vec2 mUv = matcapUv(origin, normal);
             return texture2D(matcap, mUv);
 
-            /* BASIC LIGHTING
+            /* 
+            // BASIC DIFFUSE LIGHTING
             // place lights
             vec3 lightPos = vec3(2., -5., 3.);
 
@@ -90,7 +69,6 @@ vec4 raymarch(vec3 origin, vec3 dir) {
 
             // return the color for this entity
             return vec4(col * lightIntensity, 1.);
-
             */
         }
 
