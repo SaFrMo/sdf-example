@@ -1,13 +1,13 @@
 <template>
     <shader-doodle shadertoy id="buffer0">
-        <sd-texture src="matcap3.png" name="matcap" />
+        <sd-texture src="matcap6.png" name="matcap" />
 
         <component :is="'script'" type="x-shader/x-fragment">
             {{ shader }}
         </component>
     </shader-doodle>
 
-    <shader-doodle shadertoy v-if="ready">
+    <!-- <shader-doodle shadertoy v-if="ready">
         <sd-texture
             shadow-root="#buffer0"
             force-update
@@ -18,7 +18,7 @@
         <component :is="'script'" type="x-shader/x-fragment">
             {{ fxaa }}
         </component>
-    </shader-doodle>
+    </shader-doodle> -->
 </template>
 
 <script lang="ts">
@@ -58,6 +58,6 @@ shader-doodle + shader-doodle {
     pointer-events: none;
 }
 #buffer0 {
-    opacity: 0;
+    // opacity: 0;
 }
 </style>

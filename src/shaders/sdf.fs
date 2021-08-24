@@ -4,7 +4,8 @@
 // as well as resources from Inigo Quilez:
 // https://iquilezles.org/www/articles/distfunctions/distfunctions.htm
 
-const float EPSILON = 0.0001;
+precision highp float;
+const float EPSILON = 0.00001;
 const vec3 EPSILON_V3 = vec3(EPSILON, 0., 0.);
 const float MAX_DISTANCE = 1000.;
 const int MAX_STEPS = 32;
@@ -20,12 +21,19 @@ uniform sampler2D matcap;
 /** scene function*/
 float scene(vec3 point) {
     float sphere0 = sphere(point);
+    vec3 t = point + iTime * 0.7;
+    float displacement = sin(5. * t.x) * sin(3. * t.y) * sin(3. * t.z) * 0.1;
+    sphere0 += displacement;
+
     float result = sphere0;
 
     // second sphere
     float x = (iCurrentMouse.x / iResolution.x) * 5. - 2.5;
     float y = (iCurrentMouse.y / iResolution.y) * 5. - 2.5;
     float sphere1 = sphere(point, vec3(x, y, 0.), 0.5);
+    // distort second sphere
+
+    // combine
     result = smin(sphere0, sphere1, 0.2);
 
     return result;
@@ -58,7 +66,7 @@ vec4 raymarch(vec3 origin, vec3 dir) {
         vec3 pos = origin + dir * distanceTraveled;
         float distanceToClosestEntity = scene(pos);
 
-        if(distanceToClosestEntity <= EPSILON) {
+        if(distanceToClosestEntity < EPSILON) {
             // get normal
             vec3 normal = calculateNormal(pos);
 

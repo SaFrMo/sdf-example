@@ -1,5 +1,6 @@
 // https://www.shadertoy.com/view/Ms2SWw
 uniform sampler2D buffer0;
+precision highp float;
 
 vec3 tex(vec2 p) {
     return texture2D(buffer0, p).rgb;
