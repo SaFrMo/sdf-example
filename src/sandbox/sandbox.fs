@@ -42,5 +42,5 @@ void main() {
     // execute raymarch and get color
     vec4 col = castRay(cameraPos, dir);
 
-    gl_FragColor = col;
+    gl_FragColor = col;//vec4(pow(col.rgb, vec3(0.4545)), col.a);
 }
