@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import utils from '../shaders/utils.fs?raw'
+import utils from './utilsv2.fs?raw'
 import shader from './sandbox.fs?raw'
 
 export default defineComponent({
