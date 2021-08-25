@@ -20,7 +20,7 @@ uniform sampler2D matcap;
 
 /** scene function*/
 float scene(vec3 point) {
-    float sphere0 = sphere(point);
+    float sphere0 = sdSphere(point);
     vec3 t = point + iTime * 0.7;
     float displacement = sin(5. * t.x) * sin(3. * t.y) * sin(3. * t.z) * 0.1;
     sphere0 += displacement;
@@ -30,7 +30,7 @@ float scene(vec3 point) {
     // second sphere
     float x = (iCurrentMouse.x / iResolution.x) * 5. - 2.5;
     float y = (iCurrentMouse.y / iResolution.y) * 5. - 2.5;
-    float sphere1 = sphere(point, vec3(x, y, 0.), 0.5);
+    float sphere1 = sdSphere(point, vec3(x, y, 0.), 0.5);
     // distort second sphere
     displacement = sin(-5. * t.x) * sin(-5. * t.y) * sin(-5. * t.z) * 0.1;
     sphere1 += displacement;
@@ -39,18 +39,6 @@ float scene(vec3 point) {
     result = smin(sphere0, sphere1, 0.4);
 
     return result;
-}
-/**
- * Return the normalized direction to march in from the eye point for a single pixel.
-*/
-vec3 rayDirection(float fov, vec2 size, vec2 fragCoord) {
-    vec2 xy = fragCoord - size * 0.5;
-    float z = size.y / tan(radians(fov) * 0.5);
-    return normalize(vec3(xy, z));
-}
-/** Normalized raymarch direction using the default 45deg FOV and shader resolution */
-vec3 rayDirection(vec2 fragCoord) {
-    return rayDirection(45., iResolution.xy, fragCoord);
 }
 
 vec3 calculateNormal(vec3 point) {

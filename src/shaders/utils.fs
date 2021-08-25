@@ -11,15 +11,28 @@ float smin(float a, float b, float k) {
     return min(a, b) - h * h * k * (1.0 / 4.0);
 }
 
+/**
+ * Return the normalized direction to march in from the eye point for a single pixel.
+*/
+vec3 rayDirection(vec2 fragCoord, float fov, vec2 size) {
+    vec2 xy = fragCoord - size * 0.5;
+    float z = size.y / tan(radians(fov) * 0.5);
+    return normalize(vec3(xy, z));
+}
+/** Normalized raymarch direction using the default 45deg FOV and shader resolution */
+vec3 rayDirection(vec2 fragCoord) {
+    return rayDirection(fragCoord, 45., iResolution.xy);
+}
+
 // SDF SHAPES
 /** add a sphere with specified radius at specified point */
-float sphere(vec3 point, vec3 center, float radius) {
+float sdSphere(vec3 point, vec3 center, float radius) {
     return length(point - center) - radius;
 }
 
 /** unit sphere at origin */
-float sphere(vec3 point) {
-    return sphere(point, vec3(0.), 1.);
+float sdSphere(vec3 point) {
+    return sdSphere(point, vec3(0.), 1.);
 }
 
 /** get matcap UV coordinates from camera and normal */
